@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    //set the 9-5 hour slot display
+    //9-5 business hours
     var hourDisplay = [
       "9AM",
       "10AM",
@@ -13,12 +13,12 @@ $(document).ready(function () {
     ];
     var currentHour = moment().format("h");
     var amPm = moment().format("a");
-    //declare empty array for local storage
+    //make an empty array for storage
     var savedNote = JSON.parse(localStorage.getItem("savedNote")) || [];
-    //declare input element variable
+
     var inputEl;
   
-    //get the local storage values
+    //grab local storage values
     var savedCalendarNotes = JSON.parse(localStorage.getItem("savedNote"));
   
     //now that the elements have been appended...add the notes from local storage, if any
@@ -27,44 +27,42 @@ $(document).ready(function () {
       $.each(hourDisplay, function (i, time) {
         $.each(savedCalendarNotes, function (j, val) {
           if (time === val.time) {
-            //get appropriate input field
+            
             var noteEl = $(`[data-time=${time}]`);
-            //set the note field
+        
             noteEl.val(val.note);
           }
         });
       });
     }
-    //declare index vars
+    //declare index variables
     var getIndex;
     var currentTimeIndex;
   
-    //run loop to display hourly time from 9-5 along with note field and save button
+    //create the schedule with appropriate field of time and buttons
     $.each(hourDisplay, function (i, time) {
-      //format current time to look like hourDisplay
+      //making currentTime look like the hourdisplay variable
       var currentTime = currentHour + amPm.toUpperCase();
       //first get the index of the iterated time that is not equal to the current
       getIndex = hourDisplay.indexOf(currentTime);
       currentTimeIndex = hourDisplay.indexOf(time);
   
       if (currentTime === time) {
-        //define the input field to add style during loop based on current time
+        //add to the input field to make sure there is style 
         inputEl = `<input type='text' class='bg-danger col border p-3 note text-light' value='' data-time=${time} />`;
-        //capture index
       } else {
-        //for times other than the current time, turn them blue or gray
+        //make sure that the times are color coded when it's not the current time
   
-        //if in the work day time period but not the curren time and after the current iteration
         if (getIndex !== -1 && getIndex < currentTimeIndex) {
-          //make the elements green to indicate availibility
+          //green means available
           inputEl = `<input type='text' class='bg-success col border p-3 note text-light' value='' data-time=${time} />`;
         } else {
-          //set all other timeslots to gray
+          //past time slots are gray
           inputEl = `<input type='text' class='bg-secondary col border p-3 note text-dark' value='' data-time=${time} />`;
         }
       }
   
-      //create a row with 3 columns
+      //creating a row with 3 columns
       var row = $(`<div class='row'>
       <div class="col-2 text-right border-top border-bottom p-3 time">
               ${time}
@@ -76,23 +74,16 @@ $(document).ready(function () {
       $(".calendar").append(row);
     });
   
-    //console.log(moment().format('MMMM Do YYYY'))
-  
-    //show current date in header
     $(".date").text(moment().format("MMMM Do YYYY"));
   
-    //get current time
-    //var currentTime = moment().format('h:mm:ss a');
   
-    //get selected input value
     $(".save").on("click", function () {
-      //save selected timeslot (hour) and note to array
+      //saving note to blank array from previous stated variable
       savedNote.push({
         time: $(this).prev().prev().text().trim(),
         note: $(this).prev().val(),
       });
-  
-      //console.log($(this).prev().val())
+ 
       localStorage.setItem("savedNote", JSON.stringify(savedNote));
     });
   
