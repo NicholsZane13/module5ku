@@ -1,14 +1,3 @@
 # module5ku
-GIVEN I am using a daily planner to create a schedule
-WHEN I open the planner
-THEN the current day is displayed at the top of the calendar
-WHEN I scroll down
-THEN I am presented with timeblocks for standard business hours
-WHEN I view the timeblocks for that day
-THEN each timeblock is color coded to indicate whether it is in the past, present, or future
-WHEN I click into a timeblock
-THEN I can enter an event
-WHEN I click the save button for that timeblock
-THEN the text for that event is saved in local storage
-WHEN I refresh the page
-THEN the saved events persist
+
+The goal of this project was to get comfortable with jquery and bootstrap to create a working scheduler. This was a unique project because it uses different attributes of coding that require levels of thinking in depth that haven't been used as much before in previous lessons. It was an exciting challenge that I am glad to have accomplished understanding and completing. 
